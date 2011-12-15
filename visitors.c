@@ -1599,8 +1599,8 @@ int vi_process_google_keyphrases(struct vih *vih, char *ref, time_t age)
  * TODO: url decoding */
 int vi_process_yahoo_keyphrases(struct vih *vih, char *ref, time_t age)
 {
-	char *s, *e;
-	int res;
+        char *s, *e, *p;
+	int res, page;
 	char urldecoded[VI_LINE_MAX];
 	char buf[64];
 
@@ -1611,11 +1611,16 @@ int vi_process_yahoo_keyphrases(struct vih *vih, char *ref, time_t age)
 	 * google links will start with "http://search.yahoo.". */
 	if ((s = strstr(ref+20, "?p=")) == NULL &&
 	    (s = strstr(ref+20, "&p=")) == NULL) return 0;
+	if ((p = strstr(ref+20, "&b=")) == NULL)
+		p = strstr(ref+20, "?b=");
 	if ((e = strchr(s+3, '&')) != NULL)
+		*e = '\0';
+	if (p && (e = strchr(p+3, '&')) != NULL)
 		*e = '\0';
 	vi_urldecode(urldecoded, s+3, VI_LINE_MAX);
 	vi_strtolower(urldecoded);
-	strncpy(buf, "", 64);
+	page = p ? (1+(atoi(p+3)/10)) : 1;
+	snprintf(buf, 64, " (page %d)", page);
 	buf[63] = '\0';
 	vi_strlcat(urldecoded, buf, VI_LINE_MAX);
 	res = vi_counter_incr(&vih->yahookeyphrases, urldecoded);
