@@ -61,7 +61,7 @@ struct vih {
 	struct hashtable referersage;
 	struct hashtable date;
 	struct hashtable googledate;
-        struct hashtable adsensed;
+	struct hashtable adsensed;
 	struct hashtable month;
 	struct hashtable googlemonth;
 	struct hashtable agents;
@@ -76,9 +76,9 @@ struct vih {
 	struct hashtable os;
 	struct hashtable browsers;
 	struct hashtable robots;
-        struct hashtable googlehumanlanguage;
-        struct hashtable screenres;
-        struct hashtable screendepth;
+	struct hashtable googlehumanlanguage;
+	struct hashtable screenres;
+	struct hashtable screendepth;
 	char *error;
 };
 
@@ -1424,15 +1424,63 @@ int vi_process_os(struct vih *vih, char *agent)
 {
 	/* Order may matter. */
 	char *oslist[] = {
-		"Windows", NULL,
-		"Win98", "Windows",
-		"Win95", "Windows",
-		"WinNT", "Windows",
-		"Win32", "Windows",
-		"Linux", NULL,
-		"-linux-", "Linux",
+		// Windows
+		"Windows NT 10", "Windows 10",
+		"Windows NT 6.3", "Windows 8.1",
+		"Windows NT 6.2", "Windows 8",
+		"Windows NT 6.1", "Windows 7",
+		"Windows NT 6.0", "Windows Vista/Server2008",
+		"Windows NT 5.2", "Windows XP_x64/Server2003/Home_Server",
+		"Windows NT 5.1", "Windows XP",
+		"Windows NT 5.0", "Windows 2000",
+		"Win 9x 4.90", "Windows Me",
+		"Win98", "Windows 98",
+		"Win95", "Windows 95",
+		"WinNT", "Windows NT",
+		"Win32", "Windows 32",
+		"Windows", "Windows Unknown",
+		// Macintosh
 		"Macintosh", NULL,
 		"Mac_PowerPC", "Macintosh",
+		// iPad
+		"iPad; U; CPU OS 3", "iPad iOS3",
+		"iPad; U; CPU OS 4", "iPad iOS4",
+		"iPad; CPU OS 5", "iPad iOS5",
+		"iPad; CPU OS 6", "iPad iOS6",
+		"iPad; CPU OS 7", "iPad iOS7",
+		"iPad; CPU OS 8", "iPad iOS8",
+		"iPad; CPU OS 9", "iPad iOS9",
+		"iPad; CPU OS 10", "iPad iOS10",
+		"iPad; CPU OS 11", "iPad iOS11",
+		"iPad", "iPad Unknown",
+		// iPod
+		"iPod; U; CPU iPhone OS 2", "iPod iOS2",
+		"iPod; U; CPU iPhone OS 4", "iPod iOS4",
+		"iPod; CPU iPhone OS 5", "iPod iOS5",
+		"iPod", "iPod Unknown",
+		// iPhone
+		"iPhone OS 3", "iPhone iOS3",
+		"iPhone OS 4", "iPhone iOS4",
+		"iPhone OS 5", "iPhone iOS5",
+		"iPhone OS 6", "iPhone iOS6",
+		"iPhone OS 7", "iPhone iOS7",
+		"iPhone OS 8", "iPhone iOS8",
+		"iPhone OS 9", "iPhone iOS9",
+		"iPhone OS 9", "iPhone iOS9",
+		"iPhone OS 9", "iPhone iOS9",
+		"iPhone OS 10", "iPhone iOS10",
+		"iPhone OS 11", "iPhone iOS11",
+		"iPhone", "iPhone Unknown",
+		// andoroid 
+		"Android 2", "Android_OS 2",
+		"Android 4", "Android_OS 4",
+		"Android 5", "Android_OS 5",
+		"Android 6", "Android_OS 6",
+		"Android 7", "Android_OS 7",
+		"Android 8", "Android_OS 8",
+		"Android", "Android Unknown",
+		"Linux", NULL,
+		"-linux-", "Linux",
 		"SunOS", NULL,
 		"FreeBSD", NULL,
 		"OpenBSD", NULL,
@@ -1458,9 +1506,61 @@ int vi_process_browsers(struct vih *vih, char *agent)
 		"MSIE 7", "Explorer 7.x",
 		"MSIE 8", "Explorer 8.x",
 		"MSIE 9", "Explorer 9.x",
-		"MSIE", "Explorer unknown version",
-		"Chrome", NULL,
+		"MSIE 10", "Explorer 10.x",
+		"Trident/7.0", "Explorer 11.x",
+		"Edge", "Microsoft Edge",
+		"MSIE", "Explorer Unknown",
+		// iPad
+		"iPad; U; CPU OS 3", "iPad iOS3 Safari",
+		"iPad; U; CPU OS 4", "iPad iOS4 Safari",
+		"iPad; CPU OS 5", "iPad iOS5 Safari",
+		"iPad; CPU OS 6", "iPad iOS6 Safari",
+		"iPad; CPU OS 7", "iPad iOS7 Safari",
+		"iPad; CPU OS 8", "iPad iOS8 Safari",
+		"iPad; CPU OS 96", "iPad iOS9 Safari",
+		"iPad", "iPad Unknown",
+		// iPod
+		"iPod; U; CPU iPhone OS 2", "iPod iOS2 Safari",
+		"iPod; U; CPU iPhone OS 4", "iPod iOS4 Safari",
+		"iPod; CPU iPhone OS 5", "iPad iOS5 Safari",
+		"iPod; CPU iPhone OS 6", "iPad iOS6 Safari",
+		"iPod; CPU iPhone OS 7", "iPad iOS7 Safari",
+		"iPod; CPU iPhone OS 8", "iPad iOS8 Safari",
+		"iPod; CPU iPhone OS 9", "iPad iOS9 Safari",
+		"iPod; CPU iPhone OS 10", "iPad iOS10 Safari",
+		"iPod; CPU iPhone OS 11", "iPad iOS11 Safari",
+		"iPod", "iPad Unknown",
+		// iPhone
+		"iPhone OS 3", "iPhone iOS3 Safari",
+		"iPhone OS 4", "iPhone iOS4 Safari",
+		"iPhone OS 5", "iPhone iOS5 Safari",
+		"iPhone OS 6", "iPhone iOS6 Safari",
+		"iPhone OS 7", "iPhone iOS7 Safari",
+		"iPhone OS 8", "iPhone iOS8 Safari",
+		"iPhone OS 9", "iPhone iOS9 Safari",
+		"iPhone OS 10", "iPhone iOS10 Safari",
+		"iPhone OS 11", "iPhone iOS11 Safari",
+		"iPhone", "iPhone Unknown",
+		// andoroid 
+		"Android 2", "Android OS 2 標準ブラウザ",
+		"Android 4", "Android OS 4 標準ブラウザ",
+		"Android 5", "Android OS 5 標準ブラウザ",
+		"Android 6", "Android OS 6 標準ブラウザ",
+		"Android 7", "Android OS 7 標準ブラウザ",
+		"Android 8", "Android OS 8 標準ブラウザ",
+		"Android", "Android Unknown",
+		// Vivaldi
+		"Vivaldi", "Vivaldi",
+		// chrome 
+		"Chrome", "Google Chrome",
+		// Firefox
+		"Firefox", NULL,
+		// Opera
+		"Opera", NULL,
+		// Safari
 		"Safari", NULL,
+		// Windows Phone
+		"Windows Phone ", "Windows Phone ",
 		"Konqueror", NULL,
 		"Galeon", NULL,
 		"Iceweasel", NULL,
